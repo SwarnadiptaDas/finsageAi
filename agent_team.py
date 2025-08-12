@@ -1,5 +1,3 @@
-# agent_team.py
-
 from phi.agent import Agent, Tool
 from phi.model.groq import Groq
 from phi.tools.duckduckgo import DuckDuckGo
@@ -8,7 +6,9 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+# -----------------------
 # Define your sub-agents
+# -----------------------
 
 web_agent = Agent(
     name="Web Agent",
@@ -29,7 +29,9 @@ finance_agent = Agent(
     markdown=True,
 )
 
-# Define transfer functions to delegate tasks to sub-agents
+# -----------------------
+# Task transfer functions
+# -----------------------
 
 def transfer_task_to_finance_agent(task_description, expected_output=None, additional_information=None):
     """
@@ -38,9 +40,8 @@ def transfer_task_to_finance_agent(task_description, expected_output=None, addit
     prompt = task_description
     if additional_information:
         prompt += "\nAdditional information: " + additional_information
+    return finance_agent.print_response(prompt, stream=False)
 
-    response = finance_agent.print_response(prompt, stream=False)
-    return response
 
 def transfer_task_to_web_agent(task_description, expected_output=None, additional_information=None):
     """
@@ -49,38 +50,69 @@ def transfer_task_to_web_agent(task_description, expected_output=None, additiona
     prompt = task_description
     if additional_information:
         prompt += "\nAdditional information: " + additional_information
+    return web_agent.print_response(prompt, stream=False)
 
-    response = web_agent.print_response(prompt, stream=False)
-    return response
 
-# Wrap transfer functions as Tools with required 'type' field
+# -----------------------
+# Wrap transfer functions as Tools (with type + function schema)
+# -----------------------
 
 transfer_to_finance_tool = Tool(
     name="transfer_task_to_finance_agent",
     func=transfer_task_to_finance_agent,
-    description="Forward a query to the finance agent for financial data and analysis.",
-    type="function"
+    type="function",  # required for schema
+    function={
+        "name": "transfer_task_to_finance_agent",
+        "description": "Forward a query to the finance agent for financial data and analysis.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "task_description": {"type": "string", "description": "The query or instruction to pass to the finance agent"},
+                "expected_output": {"type": ["string", "null"], "description": "Optional expected output format"},
+                "additional_information": {"type": ["string", "null"], "description": "Any extra context or requirements"}
+            },
+            "required": ["task_description"]
+        }
+    }
 )
 
 transfer_to_web_tool = Tool(
     name="transfer_task_to_web_agent",
     func=transfer_task_to_web_agent,
-    description="Forward a query to the web agent for web search and latest news.",
-    type="function"
+    type="function",  # required for schema
+    function={
+        "name": "transfer_task_to_web_agent",
+        "description": "Forward a query to the web agent for web search and latest news.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "task_description": {"type": "string", "description": "The query or instruction to pass to the web agent"},
+                "expected_output": {"type": ["string", "null"], "description": "Optional expected output format"},
+                "additional_information": {"type": ["string", "null"], "description": "Any extra context or requirements"}
+            },
+            "required": ["task_description"]
+        }
+    }
 )
 
-# Define the multi-agent team agent with transfer tools included
+
+# -----------------------
+# Define the multi-agent Team Agent
+# -----------------------
 
 agent_team = Agent(
     model=Groq(id="llama-3.3-70b-versatile"),
     team=[web_agent, finance_agent],
-    tools=[transfer_to_finance_tool, transfer_to_web_tool],  # Important: include transfer tools here
+    tools=[transfer_to_finance_tool, transfer_to_web_tool],  # important
     instructions=["Always include sources", "Use tables to display data"],
     show_tool_calls=True,
     markdown=True,
 )
 
-# Optional: Example usage when running this file as __main__
+
+# -----------------------
+# Run directly for testing
+# -----------------------
 
 if __name__ == "__main__":
     query = "Summarize analyst recommendations and share the latest news for NVDA"
