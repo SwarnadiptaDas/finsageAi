@@ -1,51 +1,116 @@
-Finsage AI
-Finsage AI is a powerful AI-driven multi-agent system designed to assist retail investors, analysts, and financial enthusiasts in making smarter investment decisions. Built with Python, LLAMA 3.1 (8B Instant), Phidata, and real-time data sources, Finsage AI brings together financial intelligence, data orchestration, and advanced language models in one seamless platform.
+# 💰 FinSage AI — Intelligent Financial Advisor
 
-🚀 Features
-📈 Real-time stock market insights and analytics
+FinSage AI is an AI-powered financial assistant designed to help users make smarter financial decisions. It analyzes user inputs, spending patterns, and financial goals to provide personalized insights, recommendations, and planning strategies.
 
-🧠 Multi-agent architecture using phidata for coordinated financial tasks
+---
 
-🤖 Built-in LLM agents with Llama 3.1 (8B Instant) for intelligent financial reasoning
+## 🚀 Features
 
-📊 Market Sentiment Analysis
+### 📊 Smart Financial Analysis
 
-📰 Live News Fetching and Analysis
+* Analyze income, expenses, and savings
+* Generate insights into spending behavior
+* Identify unnecessary expenses
 
-🛠️ Extensible framework to add custom financial tools or agents
+### 🧠 AI-Powered Recommendations
 
-🛠️ Tech Stack
-Python
+* Personalized financial advice
+* Budget optimization strategies
+* Savings and investment suggestions
 
-Phidata
+### 📈 Goal-Based Planning
 
-Llama 3.1 (GroqCloud API)
+* Plan for short-term and long-term goals
+* Track financial progress
+* Predict future financial outcomes
 
-Finnhub / NewsAPI / OpenAI / Any other API as per use
+### 💬 Conversational AI
 
-LangChain, Pandas, Matplotlib (for data processing and visualization)
+* Ask financial questions
+* Get real-time insights
+* Simplified explanations of financial concepts
 
-🔐 Environment Setup
-Before running the project, create a .env file in the root directory and store your own API keys as shown below:
+---
 
-bash
-Copy
-Edit
-# .env
-GROQ_API_KEY=your_groq_api_key
-OPENAI_API_KEY=your_openai_api_key
-FINNHUB_API_KEY=your_finnhub_api_key
-NEWS_API_KEY=your_news_api_key
-🧪 Installation
-bash
-Copy
-Edit
-git clone https://github.com/your-username/FinsageAI.git
-cd FinsageAI
+## 🛠️ Tech Stack
+
+* **Frontend**: React / Streamlit (based on your implementation)
+* **Backend**: Python
+* **AI Model**: LLM (Gemini / Groq / OpenAI)
+* **Database**: Firebase / Local Storage
+* **Visualization**: Charts & Analytics
+
+---
+
+## ⚙️ Installation
+
+### 1️⃣ Clone repository
+
+```bash
+git clone https://github.com/your-username/finsage-ai.git
+cd finsage-ai
+```
+
+### 2️⃣ Install dependencies
+
+```bash
 pip install -r requirements.txt
-▶️ Running the App
-bash
-Copy
-Edit
-phidata app run
-This will launch the Finsage AI agent system where you can interact with the assistant to get stock insights, financial news summaries, and more.
+```
+
+### 3️⃣ Add API Key
+
+Create `.env` file:
+
+```env
+API_KEY=your_api_key_here
+```
+
+---
+
+## ▶️ Run the App
+
+```bash
+streamlit run app.py
+```
+
+---
+
+## 🧠 How It Works
+
+```
+User Input (Income, Expenses)
+        ↓
+AI Analysis
+        ↓
+Financial Insights
+        ↓
+Recommendations & Planning
+```
+
+---
+
+## 📌 Use Cases
+
+* Personal finance management
+* Budget planning
+* Expense tracking
+* Financial literacy
+
+---
+
+## 🔥 Future Enhancements
+
+* 📱 Mobile app integration
+* 🔐 Secure user authentication
+* 📊 Advanced investment tracking
+* 🤖 Automated financial alerts
+
+---
+
+## 👩‍💻 Author
+
+**Swarnadipta Das**
+
+---
+
+⭐ Star this repo if you find it useful!
